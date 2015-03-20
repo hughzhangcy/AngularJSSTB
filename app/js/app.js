@@ -9,7 +9,10 @@
     .directive('bookGenres', function(){
         return {
             restrict: 'E',
-            templateUrl: 'partials/book-genres.html'
+            templateUrl: 'partials/book-genres.html',
+            scope: {
+                genres: '='
+            }
         };
     })
 
@@ -28,10 +31,17 @@
             replace: true,
             controller: function(){
                 this.showForm = false;
-                this.book = {genres{}}
+                this.book = {genres:{}};
+
+                this.addReview = function(form){
+                    books.push(this.book);
+                    this.book = {genres:{}};
+
+                    form.$setPristine();
+                };
             },
             controllerAs: 'reviewFormCtrl',
-            scope: {
+            scope:{
                 books: '=',
                 genres: '='
             }
@@ -67,7 +77,7 @@
         author: 'Robert Jordan',
         isbn: '0812513711',
         review: 'The Wheel weaves as the Wheel wills, and we are only the thread of the Pattern. Moiraine',
-        rating: 4,
+        rating: 1,
         genres: { 'non-fiction': true, fantasy: true }
       }
     ];
